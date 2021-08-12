@@ -2,18 +2,15 @@ import React, { useState } from 'react'
 import { TimeSplit } from './typings/global';
 import { tick, getTwoDaysFromNow } from './utils/time';
 import { useCssHandles } from 'vtex.css-handles';
-import { FormattedMessage } from 'react-intl';
 
-const CSS_HANDLES = ['container', 'countdown', 'title',];
+const CSS_HANDLES = ['container', 'countdown'];
 const DEFAULT_TARGET_DATE = getTwoDaysFromNow();
 
 interface CountdownProps {
-  title: string;
   targetDate: string;
 }
 
 const Countdown: StorefrontFunctionComponent<CountdownProps> = ({
-  title,
   targetDate = DEFAULT_TARGET_DATE, }) => {
 
   const [timeRemaining, setTime] = useState<TimeSplit>({
@@ -23,7 +20,6 @@ const Countdown: StorefrontFunctionComponent<CountdownProps> = ({
   });
 
   const handles = useCssHandles(CSS_HANDLES);
-  const titleText = title || <FormattedMessage id="countdown.title" />;
   tick(targetDate, setTime);
   //<h1>{targetDate}</h1>
   /**
@@ -35,7 +31,6 @@ const Countdown: StorefrontFunctionComponent<CountdownProps> = ({
    */
   return (
     <div className={`${handles.container} t-heading-2 fw3 w-100 c-muted-1`}>
-      <div className={`${handles.title} db tc`}>{titleText}</div>
       <div className={`${handles.countdown} db tc`}>
         {`${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`}
       </div>
